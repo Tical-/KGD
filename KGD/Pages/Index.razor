@@ -1,9 +1,50 @@
 ﻿@page "/"
+@using GridBlazor;
+@using GridShared;
+@using GridShared.Utility;
+@using KGD.Data;
+@using Microsoft.Extensions.Primitives
+@inject KGDService KGDService
+
 
 <PageTitle>Index</PageTitle>
-
 <h1>Hello, world!</h1>
-
 Welcome to your new app.
-
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@*<link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
+<link href="~/_content/GridBlazor/css/gridblazor-bootstrap3.min.css" rel="stylesheet" />*@
+
+@*<script suppress-error="BL9992" src="_content/GridBlazor/js/gridblazor.js"></script>*@
+
+@if (_task.IsCompleted)
+{
+    <GridComponent T="Order" Grid="@_grid"></GridComponent>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<WeatherForecast> _grid;
+    private Task _task;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Action<IGridColumnCollection<WeatherForecast>> columns = c =>
+        {
+            c.Add(o => o.Date);
+            c.Add(o => o.TemperatureF);
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        query.Add("grid-page", "2");
+
+        var client = new GridClient<WeatherForecast>(q => KGDService.GetKGDAsync(columns, q), query, false, "ordersGrid", columns);
+        _grid = client.Grid;
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}
