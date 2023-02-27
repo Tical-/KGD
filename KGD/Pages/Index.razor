@@ -38,7 +38,7 @@ else
         var query = new QueryDictionary<StringValues>();
         query.Add("grid-page", "2");
 
-        var client = new GridClient<WeatherForecast>(q => KGDService.GetKGDAsync(columns, q), query, false, "ordersGrid", columns);
+        var client = new GridClient<WeatherForecast>(q => KGDService.GetKGDAsync(columns, q), query, false, "ordersGrid", columns, new CultureInfo("ru-RU"));
         _grid = client.Grid;
         _task = client.UpdateGrid();
         await _task;

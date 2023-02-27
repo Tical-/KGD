@@ -1,0 +1,42 @@
+﻿@page "/add"
+@using KGD.Data.DTO;
+@inject KGDService KGDService
+
+<PageTitle>Добавление нового отчета</PageTitle>
+
+<h1>Добавление нового отчета</h1>
+<EditForm Model=@report OnSubmit=@FormSubmitted>
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="KGDCode">Код ДГД</label>
+        <InputText @bind-Value="report.KGDCode" ParsingErrorMessage="Must be string" />
+    </div>
+    <div class="form-group">
+        <label for="Deportament">Департамент</label>
+        <InputText @bind-Value="report.Deportament" ParsingErrorMessage="Must be string" />
+    </div>
+    <div class="form-group">
+        <label for="BIN">БИН/ИИН проверяемого НП</label>
+        <InputText @bind-Value="report.BIN" ParsingErrorMessage="Must be string" />
+    </div>
+    <div class="form-group">
+        <label for="NPName">Наименование НП</label>
+        <InputText @bind-Value="report.NPName" ParsingErrorMessage="Must be string" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Сохранить" />
+</EditForm>
+@code {
+    Report report = new Report();
+    string LastSubmitResult;
+    void FormSubmitted(EditContext editContext)
+    {
+
+        //bool formIsValid = editContext.Validate();
+        //LastSubmitResult =
+        //  formIsValid
+        //  ? "Success - form was valid"
+        //  : "Failure - form was invalid";
+
+        KGDService.Add(report);
+    }
+}
