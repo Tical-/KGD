@@ -20,3 +20,7 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "KGD.dll"]
+
+
+
+#dotnet ef database update
