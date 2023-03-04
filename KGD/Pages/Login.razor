@@ -1,7 +1,6 @@
 ﻿@page "/login"
-@using KGD.Models;
-@using KGD.Authorization.Services.Interfaces;
-@using KGD.Authorization.Services;
+@using KGD.Application.DTO;
+@using KGD.Application.Contracts.AuthContracts;
 @inject IAuthenticationService _authService;
 @inject NavigationManager _navMgr;
 <h3>Login</h3>

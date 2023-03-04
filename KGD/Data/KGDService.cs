@@ -4,6 +4,8 @@ using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
 using KGD.Data.DTO;
+using KGD.Infrastructure.Persistence;
+using KGD.Domain.Entity;
 using KGD.Pages;
 using Microsoft.Extensions.Primitives;
 
@@ -11,6 +13,7 @@ namespace KGD.Data
 {
     public class KGDService
     {
+        private readonly DataContext _context;
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -34,7 +37,7 @@ namespace KGD.Data
             return server.ItemsToDisplay;
         }
 
-        public void Add(Report report)
+        public void Add(Data.DTO.Report report)
         {
             
         }
