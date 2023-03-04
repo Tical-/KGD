@@ -1,6 +1,10 @@
 using Blazored.LocalStorage;
+using KGD.Application;
+using KGD.Application.Contracts;
 using KGD.Data;
 using KGD.Services;
+using KGD.Infrastructure;
+using KGD.Infrastructure.Persistence;
 
 try
 {
@@ -8,6 +12,8 @@ try
     builder.Services.AddRazorPages();
     builder.Services.AddApplicationLayer();
 
+builder.Services.AddApplicationLayer();
+builder.Services.AddInfrastructureLayer(builder.Configuration.GetConnectionString("KGDDatabase"));
     builder.Services.AddInfrastructureLayer(builder.Configuration.GetConnectionString("KGDDatabase"));
     builder.Services.AddServerSideBlazor();
     builder.Services.AddSingleton<WeatherForecastService>();

@@ -1,4 +1,6 @@
-﻿using KGD.Application.Contracts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using KGD.Application.Contracts;
 using KGD.Application.Contracts.AuthContracts;
 using KGD.Application.Contracts.TokenContract;
 using KGD.Application.Services.AuthServices;

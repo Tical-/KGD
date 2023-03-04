@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KGD
+namespace KGD.Domain.Entity
 {
     public class User
     {

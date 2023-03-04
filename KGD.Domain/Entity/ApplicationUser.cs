@@ -2,7 +2,7 @@
 
 namespace KGD.Domain.Entity;
 
-public class ApplicationUser : IdentityUser
+public class ApplicationUser: IdentityUser
 {
     public string? Name { get; set; }
 }
