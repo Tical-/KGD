@@ -1,22 +1,14 @@
 ﻿using KGD.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace KGD.Infrastructure.Persistence
 {
     public class DataContext : DbContext
     {
-        protected readonly IConfiguration Configuration;
-
-        public DataContext(IConfiguration configuration)
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
         {
-            Configuration = configuration;
-            this.Database.EnsureCreated();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlite(Configuration.GetConnectionString("KGDDatabase"));
+            Database.EnsureCreated();
         }
 
         public DbSet<User>? Users { get; set; }

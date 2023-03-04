@@ -15,5 +15,11 @@ namespace KGD.Infrastructure.Repository
         }
 
         public async Task<List<User>> GetUserList(CancellationToken cancellationToken) => await _context.Users.ToListAsync(cancellationToken);
+
+        public async Task AddUser(User user)
+        {
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

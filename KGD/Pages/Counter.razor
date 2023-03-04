@@ -4,13 +4,15 @@
 @inject IUserService UserService
 
 <PageTitle>Counter</PageTitle>
-
-<h1>Counter</h1>
-
+@foreach (var i in forecasts)
+{
+    <h1>@i.Id</h1>
+    <h1>@i.Name</h1>
+}
 
 @code {
 
-    private List<UserDTO> forecasts;
+    private List<UserDTO> forecasts = new List<UserDTO>();
 
     protected override async Task OnInitializedAsync()
     {
