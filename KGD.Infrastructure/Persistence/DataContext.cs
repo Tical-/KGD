@@ -1,7 +1,8 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using KGD.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
-namespace KGD.DB
+namespace KGD.Infrastructure.Persistence
 {
     public class DataContext : DbContext
     {
@@ -15,9 +16,10 @@ namespace KGD.DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite("Data Source=Database.db");
+            options.UseSqlite(Configuration.GetConnectionString("KGDDatabase"));
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User>? Users { get; set; }
+        public DbSet<Report>? Reports { get; set; }
     }
 }
