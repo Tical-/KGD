@@ -1,18 +1,18 @@
 ﻿using Blazored.LocalStorage;
-using KGD.Utility;
+using KGD.Authorization.Utility;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 
-namespace KGD.AuthProviders;
+namespace KGD.Authorization.AuthProviders;
 
-public class AuthProvider:AuthenticationStateProvider
+public class AuthProvider : AuthenticationStateProvider
 {
     private readonly HttpClient _http;
     private readonly ILocalStorageService _localStorage;
     private readonly AuthenticationState _anonymous;
 
-    public AuthProvider(HttpClient http,ILocalStorageService localStorage )
+    public AuthProvider(HttpClient http, ILocalStorageService localStorage)
     {
         _http = http;
         _localStorage = localStorage;
@@ -22,7 +22,7 @@ public class AuthProvider:AuthenticationStateProvider
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         var token = await _localStorage.GetItemAsync<string>("accessToken");
-        if(string.IsNullOrEmpty(token))
+        if (string.IsNullOrEmpty(token))
         {
             return _anonymous;
         }

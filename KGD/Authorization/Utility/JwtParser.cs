@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
 
-namespace KGD.Utility;
+namespace KGD.Authorization.Utility;
 
 public static class JwtParser
 {

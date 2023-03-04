@@ -1,8 +1,9 @@
 using Blazored.LocalStorage;
 using KGD;
-using KGD.AuthProviders;
+using KGD.Authorization.Services;
+using KGD.Authorization.Services.Interfaces;
+using KGD.Authorization.AuthProviders;
 using KGD.Data;
-using KGD.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);

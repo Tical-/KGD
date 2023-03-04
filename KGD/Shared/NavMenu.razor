@@ -17,7 +17,7 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Добавить новый отчет
             </NavLink>
 
-            @*<AuthorizeView Roles="Admin">
+            <AuthorizeView Roles="Admin">
                 <Authorized>
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="products">
@@ -29,10 +29,10 @@
                         </NavLink>
                     </div>
                 </Authorized>
-            </AuthorizeView>*@
+            </AuthorizeView>
 
 
-            @*<AuthorizeView>
+            <AuthorizeView>
                 <Authorized>
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="counter">
@@ -47,7 +47,7 @@
 
                 </Authorized>
 
-            </AuthorizeView>*@
+            </AuthorizeView>
             
         </div>
     </nav>

@@ -1,6 +1,6 @@
 ﻿using KGD.Models;
 
-namespace KGD.Services;
+namespace KGD.Authorization.Services.Interfaces;
 
 public interface IAuthenticationService
 {
