@@ -3,14 +3,19 @@ using DocumentFormat.OpenXml.InkML;
 using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
+using KGD.Data;
 using KGD.Data.DTO;
+using KGD.DB;
 using KGD.Pages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 
-namespace KGD.Data
+namespace KGD.Services
 {
     public class KGDService
     {
+        private readonly DBContext _context;
+
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -26,7 +31,7 @@ namespace KGD.Data
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             }).ToArray());
-            
+
             //var repository = new OrdersRepository(_context);
             //repository.GetAll()
             var server = new GridCoreServer<WeatherForecast>(data.Result, query,
@@ -36,7 +41,8 @@ namespace KGD.Data
 
         public void Add(Report report)
         {
-            
+            _context.Users.Add(new User() { Id = 1, Name = "Test" });
+            _context.SaveChanges();
         }
     }
 }
