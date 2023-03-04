@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Components.Authorization;
+using KGD.Application.AuthProviders;
 
 namespace KGD.Application;
 
@@ -22,6 +24,7 @@ public static class ServiceCollectionExtension
     public static void AddApplicationLayer(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
+        //services.AddScoped<AuthProvider>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<AuthorizationService, AuthorizationServiceImp>();
         services.AddTransient<ITokenService, TokenService>();

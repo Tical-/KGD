@@ -1,20 +1,18 @@
 ﻿using Blazored.LocalStorage;
 using KGD.Application.Utility;
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 
-namespace KGD.Authorization.AuthProviders;
+namespace KGD.Application.AuthProviders;
 
 public class AuthProvider : AuthenticationStateProvider
 {
-    private readonly HttpClient _http;
     private readonly ILocalStorageService _localStorage;
     private readonly AuthenticationState _anonymous;
 
-    public AuthProvider(HttpClient http, ILocalStorageService localStorage)
+    public AuthProvider(
+        ILocalStorageService localStorage)
     {
-        _http = http;
         _localStorage = localStorage;
         _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
     }
@@ -26,7 +24,6 @@ public class AuthProvider : AuthenticationStateProvider
         {
             return _anonymous;
         }
-        _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         return new AuthenticationState(new ClaimsPrincipal(
               new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType")));
     }
@@ -35,13 +32,13 @@ public class AuthProvider : AuthenticationStateProvider
     {
         var authUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType"));
         var authState = Task.FromResult(new AuthenticationState(authUser));
-        NotifyAuthenticationStateChanged(authState);
+        //NotifyAuthenticationStateChanged(authState);
 
     }
 
     public void NotifyUserLogout()
     {
         var authState = Task.FromResult(_anonymous);
-        NotifyAuthenticationStateChanged(authState);
+       // NotifyAuthenticationStateChanged(authState);
     }
 }
