@@ -1,6 +1,9 @@
 ﻿using Blazored.LocalStorage;
 using KGD.Application.Utility;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
+using System.Data;
 using System.Security.Claims;
 
 namespace KGD.Application.AuthProviders;
@@ -11,7 +14,8 @@ public class AuthProvider : AuthenticationStateProvider
     private readonly AuthenticationState _anonymous;
 
     public AuthProvider(
-        ILocalStorageService localStorage)
+        ILocalStorageService localStorage
+        )
     {
         _localStorage = localStorage;
         _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
@@ -32,13 +36,13 @@ public class AuthProvider : AuthenticationStateProvider
     {
         var authUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType"));
         var authState = Task.FromResult(new AuthenticationState(authUser));
-        //NotifyAuthenticationStateChanged(authState);
+        NotifyAuthenticationStateChanged(authState);
 
     }
 
     public void NotifyUserLogout()
     {
         var authState = Task.FromResult(_anonymous);
-       // NotifyAuthenticationStateChanged(authState);
+        NotifyAuthenticationStateChanged(authState);
     }
 }

@@ -24,10 +24,10 @@ public static class ServiceCollectionExtension
     public static void AddApplicationLayer(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-        //services.AddScoped<AuthProvider>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<AuthorizationService, AuthorizationServiceImp>();
         services.AddTransient<ITokenService, TokenService>();
+        services.AddScoped<AuthenticationStateProvider, AuthProvider>();
     }
 
     public static WebApplicationBuilder AddJwt(this WebApplicationBuilder builder)

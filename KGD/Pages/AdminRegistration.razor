@@ -1,9 +1,9 @@
-﻿@page "/registration"
+﻿@page "/adminRegistration"
 @using KGD.Application.DTO;
 @using KGD.Application.Contracts.AuthContracts;
 @inject AuthorizationService _authService;
 @inject NavigationManager _navMgr;
-<h3>Registration</h3>
+<h3>Admin Registration</h3>
 
 <div class="row my-2">
     <div class="col-md-6">
@@ -50,7 +50,7 @@
     async Task DoRegistration()
     {
         status.Message = "Wait....";
-        status = await _authService.Registration(registration);
+        status = await _authService.RegistrationAdmin(registration);
         if (status.StatusCode == 1)
             _navMgr.NavigateTo("/login");
     }

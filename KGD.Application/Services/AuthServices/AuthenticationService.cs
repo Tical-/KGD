@@ -12,21 +12,21 @@ public class AuthenticationService : IAuthenticationService
 {
     private readonly HttpClient _httpClient;
     private readonly AuthorizationService _authorizationService;
-    //private readonly AuthenticationStateProvider _authStateProvider;
+    private readonly AuthenticationStateProvider _authStateProvider;
     private readonly ILocalStorageService _localStorage;
     private readonly string baseUrl;
-   // private AuthProvider _authStateProvider;
+    //private AuthProvider _authStateProvider;
 
     public AuthenticationService(
         //AuthProvider authStateProvider,
         //HttpClient httpClient,
-        //AuthenticationStateProvider authStateProvider,
+        AuthenticationStateProvider authStateProvider,
         AuthorizationService authorizationService,
         ILocalStorageService localStorage)
     {
         //this._httpClient = httpClient;
         //this._authStateProvider = authStateProvider;
-        //_authStateProvider = authStateProvider;
+        _authStateProvider = authStateProvider;
         _authorizationService = authorizationService;
         _localStorage = localStorage;
         //  baseUrl = "https://localhost:7010/api/authorization";
@@ -56,7 +56,7 @@ public class AuthenticationService : IAuthenticationService
         if (loginResponseContent != null)
         {
             _localStorage.SetItemAsync("accessToken", loginResponseContent.Token);
-           //((AuthProvider)_authStateProvider).NotifyUserAuthentication(loginResponseContent.Token);
+            ((AuthProvider)_authStateProvider).NotifyUserAuthentication(loginResponseContent.Token);
         }
         return loginResponseContent;
 
@@ -65,7 +65,7 @@ public class AuthenticationService : IAuthenticationService
     public async Task Logout()
     {
         await _localStorage.RemoveItemAsync("accessToken");
-      //  ((AuthProvider)_authStateProvider).NotifyUserLogout();
+        ((AuthProvider)_authStateProvider).NotifyUserLogout();
     }
 
 }

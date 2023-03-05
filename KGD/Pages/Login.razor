@@ -41,6 +41,6 @@
         loginResponse.Message = "Wait....";
         loginResponse = await _authService.Login(loginModel);
         if (loginResponse.StatusCode == 1)
-            _navMgr.NavigateTo("/dashboard");
+            _navMgr.NavigateTo("/");
     }
 }
