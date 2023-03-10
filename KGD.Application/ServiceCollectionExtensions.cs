@@ -1,21 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using KGD.Application.Contracts;
-using KGD.Application.Contracts.AuthContracts;
-using KGD.Application.Contracts.TokenContract;
-using KGD.Application.Services.AuthServices;
+﻿using KGD.Application.Contracts;
 using KGD.Application.Services.UserService;
-using KGD.Authorization.Repositories.Domain;
-using KGD.Domain.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Components.Authorization;
-using KGD.Application.AuthProviders;
 
 namespace KGD.Application;
 
@@ -24,10 +13,6 @@ public static class ServiceCollectionExtension
     public static void AddApplicationLayer(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
-        services.AddScoped<AuthorizationService, AuthorizationServiceImp>();
-        services.AddTransient<ITokenService, TokenService>();
-        services.AddScoped<AuthenticationStateProvider, AuthProvider>();
     }
 
     public static WebApplicationBuilder AddJwt(this WebApplicationBuilder builder)
@@ -41,7 +26,7 @@ public static class ServiceCollectionExtension
         // Adding Jwt Bearer  
         .AddJwtBearer(options =>
         {
-            options.SaveToken = true;   
+            options.SaveToken = true;
             options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters()
             {

@@ -1,12 +1,9 @@
-﻿using Blazored.LocalStorage;
+﻿using System.Security.Claims;
+using Blazored.LocalStorage;
 using KGD.Application.Utility;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.JSInterop;
-using System.Data;
-using System.Security.Claims;
 
-namespace KGD.Application.AuthProviders;
+namespace KGD.AuthProviders;
 
 public class AuthProvider : AuthenticationStateProvider
 {

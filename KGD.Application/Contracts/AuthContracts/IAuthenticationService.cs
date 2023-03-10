@@ -1,9 +1,10 @@
-﻿using KGD.Application.DTO;
+﻿using BlazorEcommerce.Shared;
+using KGD.Application.DTO;
 
 namespace KGD.Application.Contracts.AuthContracts;
 
 public interface IAuthenticationService
 {
-    Task<LoginResponse> Login(LoginDTO model);
+    Task<ServiceResponse<string>> Login(LoginDTO model);
     Task Logout();
 }

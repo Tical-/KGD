@@ -1,6 +1,7 @@
 ﻿@page "/login"
 @using KGD.Application.DTO;
 @using KGD.Application.Contracts.AuthContracts;
+@using BlazorEcommerce.Shared
 @inject IAuthenticationService _authService;
 @inject NavigationManager _navMgr;
 <h3>Login</h3>
@@ -35,12 +36,12 @@
 
 @code {
     LoginDTO loginModel = new();
-    LoginResponse loginResponse = new();
+    ServiceResponse<string> loginResponse = new();
     async Task DoLogin()
     {
         loginResponse.Message = "Wait....";
         loginResponse = await _authService.Login(loginModel);
-        if (loginResponse.StatusCode == 1)
+        if (loginResponse.Success)
             _navMgr.NavigateTo("/");
     }
 }

@@ -1,6 +1,4 @@
 ﻿using KGD.Application.Contracts;
-using KGD.Application.Contracts.AuthContracts;
-using KGD.Application.Services.AuthServices;
 using KGD.Domain.Entity;
 using KGD.Infrastructure.Persistence;
 using KGD.Infrastructure.Repository;
@@ -18,14 +16,9 @@ namespace KGD.Infrastructure
             services.AddDbContextPool<DataContext>(options => options
                 .UseSqlite(url));
 
-            services.AddDbContextPool<AuthContextImp>(options => options
-               .UseSqlite(url));
-
             services.AddIdentity<ApplicationUser, IdentityRole>()
-           .AddEntityFrameworkStores<AuthContextImp>()
+           .AddEntityFrameworkStores<DataContext>()
            .AddDefaultTokenProviders();
-
-            services.AddScoped<IAuthContext, AuthContextImp>();
         }
     }
 }
