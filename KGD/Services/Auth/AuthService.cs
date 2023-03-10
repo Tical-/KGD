@@ -1,25 +1,23 @@
 ﻿using BlazorEcommerce.Shared;
-using KGD.Application.Contracts.AuthContracts;
+using KGD.Application.Contracts;
 using KGD.Application.DTO;
 using KGD.Domain.Entity;
-using KGD.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace KGD.Services.AuthServices;
+namespace KGD.Services.Auth;
 
-public class AuthorizationServiceImp : AuthorizationService
+public class AuthService : IAuthService
 {
-    private readonly DataContext _context;
+    private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthorizationServiceImp(DataContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+    public AuthService(IUserRepository userRepository, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
     {
-        _context = context;
+        _userRepository = userRepository;
         _configuration = configuration;
         _httpContextAccessor = httpContextAccessor;
     }
@@ -31,14 +29,8 @@ public class AuthorizationServiceImp : AuthorizationService
     public async Task<ServiceResponse<string>> Login(LoginModel model)
     {
         var response = new ServiceResponse<string>();
-        var user = await _context.Users
-            .FirstOrDefaultAsync(x => x.Email.ToLower().Equals(model.Email.ToLower()));
-        user = new User()
-        {
-            Name = "aldik",
-            Email = "aldik",
-            Role = "admin"
-        };
+        var user = (await _userRepository.GetUserByEmail(model.Email));
+
         if (user == null)
         {
             response.Success = false;
@@ -57,36 +49,19 @@ public class AuthorizationServiceImp : AuthorizationService
         return response;
     }
 
-    //public async Task<ServiceResponse<int>> Register(User user, string password)
-    //{
-    //    if (await UserExists(user.Email))
-    //    {
-    //        return new ServiceResponse<int>
-    //        {
-    //            Success = false,
-    //            Message = "User already exists."
-    //        };
-    //    }
-
-    //    CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
-
-    //    user.PasswordHash = passwordHash;
-    //    user.PasswordSalt = passwordSalt;
-
-    //    _context.Users.Add(user);
-    //    await _context.SaveChangesAsync();
-
-    //    return new ServiceResponse<int> { Data = user.Id, Message = "Registration successful!" };
-    //}
-
-    public async Task<bool> UserExists(string email)
+    public async Task<ServiceResponse<int>> Register(User user)
     {
-        if (await _context.Users.AnyAsync(user => user.Email.ToLower()
-             .Equals(email.ToLower())))
-        {
-            return true;
-        }
-        return false;
+        var userExists = (await _userRepository.GetUserByEmail(user.Email));
+
+        CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+        user.PasswordHash = passwordHash;
+        user.PasswordSalt = passwordSalt;
+        user.Role = "User";
+
+        await _userRepository.AddUser(user);
+
+        return new ServiceResponse<int> { Data = user.Id, Message = "Registration successful!" };
     }
 
     private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -125,7 +100,7 @@ public class AuthorizationServiceImp : AuthorizationService
 
         var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddDays(10),
                 signingCredentials: creds);
 
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
@@ -154,10 +129,4 @@ public class AuthorizationServiceImp : AuthorizationService
 
     //    return new ServiceResponse<bool> { Data = true, Message = "Password has been changed." };
     //}
-
-    public async Task<User> GetUserByEmail(string email)
-    {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
-    }
-
 }
