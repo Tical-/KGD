@@ -1,6 +1,8 @@
 ﻿using KGD.Application.Contracts;
+using KGD.Domain.Entity;
 using KGD.Infrastructure.Persistence;
 using KGD.Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +15,10 @@ namespace KGD.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContextPool<DataContext>(options => options
                 .UseSqlite(url));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+           .AddEntityFrameworkStores<DataContext>()
+           .AddDefaultTokenProviders();
         }
     }
 }

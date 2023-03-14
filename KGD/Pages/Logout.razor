@@ -1,0 +1,15 @@
+﻿@page "/logout"
+@using KGD.AuthProviders
+@using Blazored.LocalStorage
+@inject NavigationManager _navMgr;
+@inject AuthenticationStateProvider _authStateProvider;
+@inject ILocalStorageService _localStorage;
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await _localStorage.RemoveItemAsync("accessToken");
+        ((AuthProvider)_authStateProvider).NotifyUserLogout();
+        _navMgr.NavigateTo("/login");
+    }
+}

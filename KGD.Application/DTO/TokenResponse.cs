@@ -1,0 +1,7 @@
+﻿namespace KGD.Application.DTO;
+
+public class TokenResponse
+{
+    public string? TokenString { get; set; }
+    public DateTime ValidTo { get; set; }
+}
