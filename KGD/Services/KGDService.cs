@@ -5,7 +5,6 @@ using GridShared;
 using GridShared.Utility;
 using KGD.Data;
 using KGD.Data.DTO;
-using KGD.DB;
 using KGD.Pages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
@@ -14,7 +13,7 @@ namespace KGD.Services
 {
     public class KGDService
     {
-        private readonly DBContext _context;
+        //private readonly DBContext _context;
 
         private static readonly string[] Summaries = new[]
         {
@@ -39,10 +38,10 @@ namespace KGD.Services
             return server.ItemsToDisplay;
         }
 
-        public void Add(Report report)
-        {
-            _context.Users.Add(new User() { Id = 1, Name = "Test" });
-            _context.SaveChanges();
-        }
+        //public void Add(Report report)
+        //{
+        //    _context.Users.Add(new User() { Id = 1, Name = "Test" });
+        //    _context.SaveChanges();
+        //}
     }
 }

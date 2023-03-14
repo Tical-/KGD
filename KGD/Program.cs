@@ -12,7 +12,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration.GetConnectionString("KGDDatabase"));
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddSingleton<KGDService>();
+//builder.Services.AddSingleton<KGDService>();
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
